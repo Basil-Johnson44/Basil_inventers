@@ -37,12 +37,22 @@
             display: block;
             color: white;
             text-align: center;
-            padding: 14px 20px;
+            padding: 10px 15px; /* Reduced padding for tighter layout */
             text-decoration: none;
+            transition: background-color 0.3s;
         }
         nav a:hover {
             background-color: #ddd;
             color: black;
+        }
+        nav a.active {
+            background-color: #f0f0f0; /* Mild white highlight for the active tab */
+            color: black;
+        }
+        .breadcrumb {
+            margin: 10px 20px;
+            font-size: 14px;
+            color: #555;
         }
         section {
             display: none;
@@ -101,28 +111,45 @@
         }
     </style>
     <script>
-        function showSection(sectionId) {
+        function showSection(sectionId, path) {
             const sections = document.querySelectorAll("section");
             sections.forEach(section => {
                 section.style.display = "none";
             });
             document.getElementById(sectionId).style.display = "block";
+
+            // Highlight the active tab
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`[onclick*="${sectionId}"]`).classList.add('active');
+
+            // Update breadcrumb path
+            document.getElementById('breadcrumb').textContent = path;
+        }
+
+        function showAlert(message) {
+            alert(message);
         }
     </script>
 </head>
 <body>
 
 <header>
-    <img src="https://raw.githubusercontent.com/Basil-Johnson44/Basil_inventers/3f5c1efcd2a8fdba543f1d9b3a0240c2dd830fdf/logo.jpg" alt="Logo">
+    <img src="https://raw.githubusercontent.com/Basil-Johnson44/Basil_inventers/3f5c1efcd2a8fdba543f1d9b3a0240c2dd830fdf/logo.jpg" alt="Basil Inventers Logo">
     <h1>Basil Inventers</h1>
 </header>
 
 <nav>
-    <a href="#" onclick="showSection('home')">Home</a>
-    <a href="#" onclick="showSection('projects')">Projects</a>
-    <a href="#" onclick="showSection('contact')">Contact</a>
-    <a href="#" onclick="showSection('about')">About</a>
+    <a href="#" class="active" onclick="showSection('home', 'Home')">Home</a>
+    <a href="#" onclick="showSection('projects', 'Projects')">Projects</a>
+    <a href="#" onclick="showSection('contact', 'Contact')">Contact</a>
+    <a href="#" onclick="showSection('about', 'About')">About</a>
 </nav>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb" id="breadcrumb">Home</div>
 
 <!-- Sections -->
 <section id="home">
@@ -132,9 +159,9 @@
 
 <section id="projects">
     <h2>Projects</h2>
-    <a href="#" class="project-button python-btn" onclick="alert('Python Projects Coming Soon!')">Python</a>
-    <a href="#" class="project-button arduino-btn" onclick="alert('Arduino Projects Coming Soon!')">Arduino</a>
-    <a href="#" class="project-button models-btn" onclick="alert('3D Models Projects Coming Soon!')">3D Models</a>
+    <a href="#" class="project-button python-btn" onclick="showAlert('Python projects are not yet uploaded!'); showSection('projects', 'Projects > Python')">Python</a>
+    <a href="#" class="project-button arduino-btn" onclick="showAlert('Arduino projects are not yet uploaded!'); showSection('projects', 'Projects > Arduino')">Arduino</a>
+    <a href="#" class="project-button models-btn" onclick="showAlert('3D Models projects are not yet uploaded!'); showSection('projects', 'Projects > 3D Models')">3D Models</a>
 </section>
 
 <section id="contact">
@@ -149,9 +176,8 @@
 
 <!-- Footer -->
 <footer>
-    <p>Website created by Basil Johnson.M</p>
-    <p>(Date: 16.10.2024)</p>
-    <p>website's last update is on 20.10.2024</p>
+    <p>created by Basil Johnson(16.10.2024)</p>
+    <p>last update in on 20.10.2024</p>
 </footer>
 
 </body>
