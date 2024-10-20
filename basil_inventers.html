@@ -13,6 +13,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
         }
         header {
             background-color: #333;
@@ -37,7 +38,7 @@
             display: block;
             color: white;
             text-align: center;
-            padding: 10px 15px; /* Reduced padding for tighter layout */
+            padding: 10px 15px;
             text-decoration: none;
             transition: background-color 0.3s;
         }
@@ -46,7 +47,7 @@
             color: black;
         }
         nav a.active {
-            background-color: #f0f0f0; /* Mild white highlight for the active tab */
+            background-color: #f0f0f0;
             color: black;
         }
         .breadcrumb {
@@ -59,44 +60,64 @@
             padding: 20px;
             flex-grow: 1;
         }
-        #home {
+        #home, #python-project, #view-project {
             display: block;
         }
 
         /* Button styles */
         .project-button {
             display: inline-block;
-            padding: 15px 25px;
-            margin: 10px;
-            font-size: 16px;
+            padding: 10px 15px;
+            font-size: 14px;
             font-weight: bold;
-            text-decoration: none;
             color: white;
-            background-color: #28a745;
-            border-radius: 10px;
-            transition: background-color 0.3s, transform 0.2s;
+            background-color: #4CAF50;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
         .project-button:hover {
-            background-color: #218838;
-            transform: scale(1.05);
+            background-color: #44708f;
         }
-        .python-btn {
-            background-color: #4CAF50; /* Green */
+
+        /* Settings toggle */
+        .dark-mode {
+            background-color: #121212;
+            color: white;
         }
-        .python-btn:hover {
+
+        .dark-mode .code-block {
+            background-color: #d3d3d3;
+        }
+
+        /* Copy button styles */
+        .code-block {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 20px 0;
+            position: relative;
+        }
+        .code-block code {
+            font-family: monospace;
+            white-space: pre;
+            display: block;
+            color: black;
+        }
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .copy-button:hover {
             background-color: #45a049;
-        }
-        .arduino-btn {
-            background-color: #007bff; /* Blue */
-        }
-        .arduino-btn:hover {
-            background-color: #0069d9;
-        }
-        .models-btn {
-            background-color: #ff5722; /* Orange */
-        }
-        .models-btn:hover {
-            background-color: #e64a19;
         }
 
         /* Footer styles */
@@ -129,6 +150,17 @@
             document.getElementById('breadcrumb').textContent = path;
         }
 
+        function toggleMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function copyCode() {
+            const code = document.getElementById('python-code').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Code copied to clipboard');
+            });
+        }
+
         function showAlert(message) {
             alert(message);
         }
@@ -137,14 +169,14 @@
 <body>
 
 <header>
-    <img src="https://raw.githubusercontent.com/Basil-Johnson44/Basil_inventers/3f5c1efcd2a8fdba543f1d9b3a0240c2dd830fdf/logo.jpg" alt="Basil Inventers Logo">
+    <img src="https://raw.githubusercontent.com/Basil-Johnson44/Basil_inventers/3f5c1efcd2a8fdba543f1d9b3a0240c2dd830fdf/logo.jpg" alt="Logo">
     <h1>Basil Inventers</h1>
 </header>
 
 <nav>
     <a href="#" class="active" onclick="showSection('home', 'Home')">Home</a>
     <a href="#" onclick="showSection('projects', 'Projects')">Projects</a>
-    <a href="#" onclick="showSection('contact', 'Contact')">Contact</a>
+    <a href="#" onclick="showSection('settings', 'Settings')">Settings</a>
     <a href="#" onclick="showSection('about', 'About')">About</a>
 </nav>
 
@@ -159,25 +191,123 @@
 
 <section id="projects">
     <h2>Projects</h2>
-    <a href="#" class="project-button python-btn" onclick="showAlert('Python projects are not yet uploaded!'); showSection('projects', 'Projects > Python')">Python</a>
-    <a href="#" class="project-button arduino-btn" onclick="showAlert('Arduino projects are not yet uploaded!'); showSection('projects', 'Projects > Arduino')">Arduino</a>
-    <a href="#" class="project-button models-btn" onclick="showAlert('3D Models projects are not yet uploaded!'); showSection('projects', 'Projects > 3D Models')">3D Models</a>
+    <a href="#" class="project-button python-btn" onclick="showSection('python-project', 'Projects > Python')">Python</a>
+    <a href="#" class="project-button arduino-btn" onclick="showAlert('Projects will be uploaded soon!'); showSection('projects', 'Projects > Arduino')">Arduino</a>
+    <a href="#" class="project-button models-btn" onclick="showAlert('Projects will be uploaded soon!'); showSection('projects', 'Projects > 3D Models')">3D Models</a>
 </section>
 
-<section id="contact">
-    <h2>Contact Us</h2>
-    <p>Feel free to reach out to us at <a href="mailto:johnsonbasil1234@gmail.com">johnsonbasil1234@gmail.com</a>.</p>
+<section id="python-project">
+    <h2 style="font-size: 1.20em; display:inline-block;">1. Calculator13</h2>
+    <button class="project-button" onclick="showSection('view-project', 'Projects > Python > Calculator13')">View</button>
+</section>
+
+<section id="view-project">
+    <h2>Calculator13</h2>
+    <div class="code-block">
+        <button class="copy-button" onclick="copyCode()">Copy Code</button>
+        <pre><code id="python-code">
+# Made by M.Basil Johnson
+# Date: 31 August 2024
+
+a = int(input("First_value : "))
+b = int(input("Second_value : "))
+o = str(input("Enter the operator : "))
+
+if o == "+" :
+    c = a + b 
+    print("answer: " + str(a) + " + " + str(b) + " = " + str(c))
+elif o == "-" :
+    c = a - b
+    print("answer: " + str(a) + " - " + str(b) + " = " + str(c))
+elif o == "*" :
+    c = a * b 
+    print("answer: " + str(a) + " * " + str(b) + " = " + str(c))
+elif o == "/" :
+    c = a / b 
+    print("answer: " + str(a) + " / " + str(b) + " = " + str(c))
+        </code></pre>
+    </div>
+
+    <h3>About the Code</h3>
+    <p>Code Breakdown
+        Comments:
+        
+        python
+        
+        # Made by M.Basil Johnson
+        # Date: 31 August 2024
+
+        These are comments that provide information about the author and the date of creation. They are not executed as part of the program.
+        Input for Values:
+        
+        python
+        
+        a = int(input("First_value : "))
+        b = int(input("Second_value : "))
+
+        The code prompts the user to input two integers.
+        input("First_value : ") displays the message "First_value : " and waits for the user to type a response.
+        The response is converted to an integer using int() and stored in variable a.
+        The same process is repeated for the second value, which is stored in variable b.
+        Input for Operator:
+        
+        python
+        
+        o = str(input("Enter the operator : "))
+
+        The code prompts the user to enter a mathematical operator (e.g., +, -, *, /).
+        The response is stored in the variable o as a string.
+        Conditional Statements:
+        
+        python
+        
+        if o == "+" :
+            c = a + b 
+            print("answer: " + str(a) + " + " + str(b) + " = " + str(c))
+        elif o == "-" :
+            c = a - b
+            print("answer: " + str(a) + " - " + str(b) + " = " + str(c))
+        elif o == "*" :
+            c = a * b 
+            print("answer: " + str(a) + " * " + str(b) + " = " + str(c))
+        elif o == "/" :
+            c = a / b 
+            print("answer: " + str(a) + " / " + str(b) + " = " + str(c))
+
+        This section uses conditional statements (if-elif) to determine which operation to perform based on the operator input by the user:
+        Addition (+):
+        If o is "+", the code adds a and b and stores the result in c. It then prints the result in a formatted string.
+        Subtraction (-):
+        If o is "-", it subtracts b from a and prints the result.
+        Multiplication (*):
+        If o is "*", it multiplies a by b and prints the result.
+        Division (/):
+        If o is "/", it divides a by b and prints the result.
+        
+        Summary
+        The code allows users to perform basic arithmetic operations (addition, subtraction, multiplication, and division) on two integer inputs.
+        The program captures user input, determines the operation based on the input operator, performs the calculation, and then displays the result.</p>
+
+   
+</section>
+
+<section id="settings">
+    <h2>Settings</h2>
+    <button onclick="toggleMode()">Toggle Dark Mode / Light Mode</button>
 </section>
 
 <section id="about">
     <h2>About Basil Inventers</h2>
     <p>Basil Inventers is dedicated to fostering innovation in Python, Arduino, and 3D modeling. Join us in exploring new frontiers of technology!</p>
+    <h2>Contact</h2>
+    <p>If you have any questions, feel free to reach out at: <a href="mailto:johnsonbasil1234@gmail.com">johnsonbasil1234@gmail.com</a></p>
 </section>
 
 <!-- Footer -->
 <footer>
     <p>created by Basil Johnson(16.10.2024)</p>
-    <p>last update in on 20.10.2024</p>
+    <p>last update in on(20.10.2024)</p>
+    <p></p>
 </footer>
 
 </body>
