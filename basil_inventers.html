@@ -81,6 +81,19 @@
         .project-button:hover {
             background-color: #44708f;
         }
+        
+        /* Change size of View button */
+        .view-btn {
+            transform: scale(0.9); /* Reduce by 10% */
+        }
+
+        /* Change Arduino and 3D Models buttons colors */
+        .arduino-btn {
+            background-color: #0000FF; /* Blue */
+        }
+        .models-btn {
+            background-color: #FFA500; /* Orange */
+        }
 
         /* Settings toggle */
         .dark-mode {
@@ -90,6 +103,7 @@
 
         .dark-mode .code-block {
             background-color: #d3d3d3;
+            border-color: white;
         }
 
         /* Copy button styles */
@@ -97,6 +111,7 @@
             background-color: #f4f4f4;
             padding: 10px;
             border-radius: 10px;
+            border: 1px solid black; /* Black border */
             margin: 20px 0;
             position: relative;
         }
@@ -198,7 +213,7 @@
 
 <section id="python-project">
     <h2 style="font-size: 1.20em; display:inline-block;">1. Calculator13</h2>
-    <button class="project-button" onclick="showSection('view-project', 'Projects > Python > Calculator13')">View</button>
+    <button class="project-button view-btn" onclick="showSection('view-project', 'Projects > Python > Calculator13')">View</button>
 </section>
 
 <section id="view-project">
@@ -306,7 +321,7 @@ elif o == "/" :
 <!-- Footer -->
 <footer>
     <p>created by Basil Johnson(16.10.2024)</p>
-    <p>last update in on(20.10.2024)</p>
+    <p>last update in on(21.10.2024)</p>
     <p></p>
 </footer>
 
